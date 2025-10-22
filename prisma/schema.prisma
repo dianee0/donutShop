@@ -28,6 +28,7 @@ model MenuItem {
   name String
   description String?
   price Int
+  flavors String?
   imageUrl String?
   isActive Boolean @default(true)
   categoryId String

@@ -3,13 +3,13 @@ import Link from "next/link";
 export default function Header() {
   const navLinks = [
     { name: "MENU", href: "/menu" },
-    { name: "LOCATIONS", href: "/locations" },
+    { name: "OUR STORY", href: "/#story" },
+    { name: "LOCATIONS", href: "/#locations" },
     { name: "CONTACT US", href: "/contact" },
-    { name: "OUR STORY", href: "/story" },
   ];
 
   return (
-    <header className="bg-[#FFF9F0] border-b border-gray-200">
+    <header className="bg-[#FFF9F0] border-b border-gray-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
