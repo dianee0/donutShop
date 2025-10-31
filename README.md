@@ -8,7 +8,7 @@ A modern, full-stack donut shop website featuring a dynamic menu system, newslet
 
 - **Framework:** [Next.js](https://nextjs.org/) 15 (React, App Router)
 - **Language:** [TypeScript](https://www.typescriptlang.org/)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/) v4
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) v3
 - **Database:** [SQLite](https://www.sqlite.org/) (development) / PostgreSQL (production)
 - **ORM:** [Prisma](https://www.prisma.io/) (schema, migrations, type-safe queries)
 
