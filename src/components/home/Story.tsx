@@ -110,7 +110,7 @@ export default function Story() {
             >
               {[
                 { number: "27+", label: "Years" },
-                { number: "50+", label: "Varieties" },
+                { number: "30+", label: "Varieties" },
                 { number: "3", label: "Locations" },
               ].map((stat, index) => (
                 <motion.div
