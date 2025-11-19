@@ -1,11 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import Button from "@/components/ui/Button";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
     <section className="bg-[#FFF9F0] relative overflow-hidden min-h-[calc(100vh-80px)]">
       {/* Heart trail SVG on left */}
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 opacity-70 hidden lg:block">
+      <motion.div
+        className="absolute left-0 top-1/2 -translate-y-1/2 opacity-70 hidden lg:block"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 0.7, x: 0 }}
+        transition={{ duration: 1, delay: 0.5 }}
+      >
         <svg
           width="201"
           height="473"
@@ -19,36 +27,70 @@ export default function Hero() {
             fill="black"
           />
         </svg>
-      </div>
+      </motion.div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative z-10 flex items-center min-h-[calc(100vh-80px)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="space-y-6">
             {/* Welcome badge */}
-            <div className="flex items-center gap-2">
+            <motion.div
+              className="flex items-center gap-2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               {/* <span className="text-2xl text-gray-700">☕︎</span> */}
               <span className="text-lg font-medium text-gray-700 tracking-wide">
                 WELCOME!
               </span>
-            </div>
+            </motion.div>
 
             {/* Main tagline */}
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-              <span className="text-[#C84B6B]">Donuts Made Daily,</span>
+            <motion.h1
+              className="text-5xl lg:text-6xl font-bold leading-tight"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <motion.span
+                className="text-[#C84B6B] inline-block"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                Donuts Made Daily,
+              </motion.span>
               <br />
-              <span className="text-[#C84B6B]">Happiness Made Fresh.</span>
-            </h1>
+              <motion.span
+                className="text-[#C84B6B] inline-block"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              >
+                Happiness Made Fresh.
+              </motion.span>
+            </motion.h1>
 
             {/* CTA Button */}
-            <div className="pt-4">
+            <motion.div
+              className="pt-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1 }}
+            >
               <Button href="/menu" variant="primary">
                 View Menu
               </Button>
-            </div>
+            </motion.div>
 
             {/* Hours info */}
-            <div className="flex items-center gap-2 pt-2">
+            <motion.div
+              className="flex items-center gap-2 pt-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
+            >
               <span className="text-xl text-red-700">❤︎</span>
               <p className="text-sm text-gray-600">
                 Open from <span className="font-semibold">4am to 12pm</span>{" "}
@@ -58,20 +100,43 @@ export default function Hero() {
                   Select holidays excluded.
                 </span>
               </p>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right image */}
-          <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-            <Image
-              src="/donuts-hero.png"
-              alt="Colorful fresh donuts with sprinkles"
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </div>
+          <motion.div
+            className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl"
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              duration: 0.8,
+              ease: [0.6, -0.05, 0.01, 0.99],
+            }}
+            whileHover={{
+              scale: 1.02,
+              y: -8,
+              transition: { duration: 0.3 },
+            }}
+          >
+            <motion.div
+              initial={{ scale: 1.1 }}
+              animate={{ scale: 1 }}
+              transition={{
+                duration: 1.2,
+                ease: "easeOut",
+              }}
+              className="w-full h-full"
+            >
+              <Image
+                src="/donuts-hero.png"
+                alt="Colorful fresh donuts with sprinkles"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

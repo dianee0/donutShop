@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -27,17 +30,44 @@ export default function Button({
 
   const buttonClass = `${baseStyles} ${variantStyles[variant]} ${className}`;
 
+  const buttonVariants = {
+    hover: {
+      scale: 1.05,
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10,
+      },
+    },
+    tap: {
+      scale: 0.95,
+    },
+  };
+
   if (href) {
     return (
-      <Link href={href} className={buttonClass}>
-        {children}
-      </Link>
+      <motion.div
+        whileHover="hover"
+        whileTap="tap"
+        variants={buttonVariants}
+        className="inline-block"
+      >
+        <Link href={href} className={buttonClass}>
+          {children}
+        </Link>
+      </motion.div>
     );
   }
 
   return (
-    <button onClick={onClick} className={buttonClass}>
+    <motion.button
+      onClick={onClick}
+      className={buttonClass}
+      whileHover="hover"
+      whileTap="tap"
+      variants={buttonVariants}
+    >
       {children}
-    </button>
+    </motion.button>
   );
 }

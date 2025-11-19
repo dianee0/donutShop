@@ -1,4 +1,13 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+
 export default function Locations() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   const locations = [
     {
       name: "Fail's Donuts & Bagels",
@@ -24,29 +33,58 @@ export default function Locations() {
   ];
 
   return (
-    <section id="locations" className="bg-[#FFF9F0] py-20 lg:py-28">
+    <section id="locations" className="bg-[#FFF9F0] py-20 lg:py-28" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-block mb-4">
+        <motion.div
+          className="text-center max-w-3xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.div
+            className="inline-block mb-4"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={
+              isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }
+            }
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <span className="text-sm font-semibold text-[#C84B6B] tracking-widest uppercase bg-white px-4 py-2 rounded-full">
               Find Us
             </span>
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          </motion.div>
+          <motion.h2
+            className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
             Visit Our <span className="text-[#C84B6B]">Locations</span>
-          </h2>
-          <p className="text-gray-600 text-lg">
+          </motion.h2>
+          <motion.p
+            className="text-gray-600 text-lg"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             Stop by any of our five locations to enjoy fresh donuts daily.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Locations Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {locations.map((location, index) => (
-            <div
+            <motion.div
               key={index}
               className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+              whileHover={{
+                scale: 1.03,
+                transition: { duration: 0.2 },
+              }}
             >
               {/* Location Icon */}
               <div className="w-12 h-12 bg-[#C84B6B] bg-opacity-10 rounded-full flex items-center justify-center mb-4">
@@ -126,10 +164,14 @@ export default function Locations() {
               </div>
 
               {/* Get Directions Button */}
-              <button className="mt-6 w-full bg-[#C84B6B] text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-[#B03A5A] transition-colors duration-200">
+              <motion.button
+                className="mt-6 w-full bg-[#C84B6B] text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-[#B03A5A] transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 Get Directions
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           ))}
         </div>
       </div>
