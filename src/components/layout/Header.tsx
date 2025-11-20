@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const navLinks = [
     { name: "MENU", href: "/menu" },
     { name: "OUR STORY", href: "/#story" },
@@ -67,6 +70,8 @@ export default function Header() {
             className="md:hidden p-2 text-gray-700"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
           >
             <svg
               className="w-6 h-6"
@@ -77,10 +82,47 @@ export default function Header() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path d="M4 6h16M4 12h16M4 18h16"></path>
+              {isMenuOpen ? (
+                <path d="M6 18L18 6M6 6l12 12"></path>
+              ) : (
+                <path d="M4 6h16M4 12h16M4 18h16"></path>
+              )}
             </svg>
           </motion.button>
         </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.nav
+              className="md:hidden border-t border-gray-200 py-4"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="flex flex-col space-y-3 px-2">
+                {navLinks.map((link, index) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.2, delay: index * 0.05 }}
+                  >
+                    <Link
+                      href={link.href}
+                      className="block py-2 px-4 text-base font-medium text-gray-700 hover:text-[#C84B6B] hover:bg-[#FFF9F0] rounded-lg transition-colors duration-200"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </div>
     </motion.header>
   );
