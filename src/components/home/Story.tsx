@@ -1,8 +1,30 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, animate } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+
+function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const nodeRef = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(nodeRef, { once: true });
+
+  useEffect(() => {
+    const node = nodeRef.current;
+    if (!node || !isInView) return;
+
+    const controls = animate(0, value, {
+      duration: 2,
+      ease: "easeOut",
+      onUpdate: (latest) => {
+        node.textContent = Math.round(latest).toString() + suffix;
+      },
+    });
+
+    return () => controls.stop();
+  }, [isInView, value, suffix]);
+
+  return <span ref={nodeRef}>0{suffix}</span>;
+}
 
 export default function Story() {
   const ref = useRef(null);
@@ -109,9 +131,9 @@ export default function Story() {
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               {[
-                { number: "27+", label: "Years" },
-                { number: "30+", label: "Varieties" },
-                { number: "3", label: "Locations" },
+                { value: 27, suffix: "+", label: "Years" },
+                { value: 30, suffix: "+", label: "Varieties" },
+                { value: 3, suffix: "", label: "Locations" },
               ].map((stat, index) => (
                 <motion.div
                   key={index}
@@ -125,7 +147,7 @@ export default function Story() {
                   whileHover={{ scale: 1.1 }}
                 >
                   <div className="text-3xl font-bold text-[#C84B6B]">
-                    {stat.number}
+                    <Counter value={stat.value} suffix={stat.suffix} />
                   </div>
                   <div className="text-sm text-gray-600">{stat.label}</div>
                 </motion.div>

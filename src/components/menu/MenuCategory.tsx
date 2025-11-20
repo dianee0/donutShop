@@ -91,7 +91,13 @@ export default function MenuCategory({ category, index }: MenuCategoryProps) {
                 </motion.div>
               ) : (
                 <div className="w-full h-full bg-white flex items-center justify-center">
-                  <span className="text-6xl opacity-20">🍩</span>
+                  <Image
+                    src="/choc-donut-with-sprinkles-pixel.png"
+                    alt="Default donut"
+                    width={80}
+                    height={80}
+                    className="opacity-30"
+                  />
                 </div>
               )}
             </div>

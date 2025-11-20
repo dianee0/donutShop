@@ -143,7 +143,7 @@ export default function Hero({ announcements = [] }: HeroProps) {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 1.2 }}
             >
-              <span className="text-xl text-red-700">❤︎</span>
+              <img src="/heart-pixel.png" alt="Heart" width={24} height={24} />
               <p className="text-sm text-gray-600">
                 Open from <span className="font-semibold">4am to 12pm</span>{" "}
                 everyday.

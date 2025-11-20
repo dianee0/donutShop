@@ -14,21 +14,21 @@ export default function Locations() {
       address: "8414 Lander Ave",
       city: "Hilmar, CA 95324",
       phone: "(209) 667-4718",
-      hours: "4am - 12pm Daily",
+      hours: "4am - 12pm Mon-Sun",
     },
     {
       name: "Jim's Donuts & Bagels",
       address: "1915 N St",
       city: "Newman, CA 95360",
       phone: "(209) 862-2044",
-      hours: "4am - 12pm Daily",
+      hours: "Mon-Fri: 4:30am - 12pm\nSat: 5am - 12pm\nSun: 6am - 12pm",
     },
     {
       name: "Jim's Donuts & Bagels",
       address: "Schendel Ave. Ste 16385",
       city: "Delhi, CA 95315",
       phone: "(209) 634-0016",
-      hours: "4am - 12pm Daily",
+      hours: "6am - 12pm Mon-Sun",
     },
   ];
 
@@ -68,7 +68,7 @@ export default function Locations() {
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            Stop by any of our five locations to enjoy fresh donuts daily.
+            Stop by any of our three locations to enjoy fresh donuts daily.
           </motion.p>
         </motion.div>
 
@@ -88,7 +88,14 @@ export default function Locations() {
             >
               {/* Location Icon */}
               <div className="w-12 h-12 bg-[#C84B6B] bg-opacity-10 rounded-full flex items-center justify-center mb-4">
-                <span className="text-2xl">📍</span>
+                <motion.img
+                  src="/location-pin.png"
+                  alt="Location"
+                  width={32}
+                  height={32}
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
+                />
               </div>
 
               {/* Location Name */}
@@ -143,9 +150,9 @@ export default function Locations() {
                 </div>
 
                 {/* Hours */}
-                <div className="flex items-center gap-2 pt-2">
+                <div className="flex items-start gap-2 pt-2">
                   <svg
-                    className="w-5 h-5 text-[#C84B6B] flex-shrink-0"
+                    className="w-5 h-5 text-[#C84B6B] flex-shrink-0 mt-0.5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -157,7 +164,7 @@ export default function Locations() {
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <p className="font-semibold text-gray-900">
+                  <p className="font-semibold text-gray-900 whitespace-pre-line">
                     {location.hours}
                   </p>
                 </div>

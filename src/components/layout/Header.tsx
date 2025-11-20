@@ -23,7 +23,12 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             {/* Going to replace coffee icon with my own... */}
-            <div className="text-4xl text-gray-700">☕︎ </div>
+            <img
+              src="/coffee-mug-pixel.png"
+              alt="Coffee"
+              width={48}
+              height={48}
+            />
             <div className="flex flex-col">
               <span className="text-xl font-bold text-gray-800 tracking-tight leading-tight">
                 JIM&apos;S DONUTS

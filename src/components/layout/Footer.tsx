@@ -25,14 +25,18 @@ export default async function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl">☕︎ </span>
+              <img
+                src="/blue-coffee-mug.png"
+                alt="Coffee"
+                width={32}
+                height={32}
+              />
               <span className="text-xl font-bold text-white">
                 JIM&apos;S DONUTS & BAGELS
               </span>
             </div>
             <p className="text-sm text-gray-400 max-w-md">
-              Serving fresh donuts and bagels daily since 1998. Made with love,
-              served with a smile.
+              Serving fresh donuts and bagels daily since 1998.
             </p>
             {latestUpdate && (
               <div className="mt-4 text-xs text-gray-500">
@@ -83,19 +87,33 @@ export default async function Footer() {
           {/* Hours */}
           <div>
             <h3 className="text-white font-semibold mb-4">Hours</h3>
-            <p className="text-sm">
-              Open Daily
-              <br />
-              4:00 AM - 12:00 PM
+            <p className="text-sm">Hours vary by location</p>
+            <p className="text-xs text-gray-400 mt-2">
+              See{" "}
+              <Link href="/#locations" className="underline hover:text-white">
+                locations
+              </Link>{" "}
+              for details
             </p>
-            <p className="text-xs text-gray-500 mt-2">
-              *Select holidays excluded
-            </p>
+            <p className="text-xs text-gray-500 mt-1">*Holidays excluded</p>
           </div>
         </div>
 
+        {/* Google Review CTA */}
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+          <p className="text-gray-300 text-sm mb-3">
+            Like our shop?{" "}
+            <Link
+              href="/reviews"
+              className="text-[#C84B6B] hover:text-[#d15a7a] font-semibold transition-colors underline"
+            >
+              Leave us a review on Google
+            </Link>
+          </p>
+        </div>
+
         {/* Bottom bar */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
+        <div className="border-t border-gray-800 mt-6 pt-6 text-center text-sm text-gray-500">
           <p>
             &copy; {new Date().getFullYear()} Jim&apos;s Donuts & Bagels. All
             rights reserved.
