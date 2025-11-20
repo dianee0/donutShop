@@ -68,6 +68,12 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+To kill any process on port 3000:
+
+```bash
+lsof -ti:3000 | xargs kill -9
+```
+
 ### Database Management
 
 - **View database:** `npx prisma studio`
@@ -85,7 +91,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Database Schema
 
 **MenuCategory** → has many **MenuItem**  
-**Subscriber** → stores newsletter emails
+**Annoucments** → stores and displays relevant annoucments
 
 ### Key Features
 

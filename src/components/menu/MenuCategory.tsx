@@ -10,6 +10,8 @@ interface MenuItem {
   name: string;
   description: string | null;
   price: number;
+  smallPrice: number | null;
+  largePrice: number | null;
   imageUrl: string | null;
   flavors: string | null;
   isActive: boolean;
@@ -46,6 +48,16 @@ export default function MenuCategory({ category, index }: MenuCategoryProps) {
           animate={isInView ? { width: 80 } : { width: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         />
+        {(category.id === "croissants" || category.id === "bagels") && (
+          <motion.p
+            className="text-sm text-gray-600 mt-4 italic"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            *Cream cheese on Ham & Cheese items + $1.00
+          </motion.p>
+        )}
       </motion.div>
 
       {/* Menu Items Grid */}
@@ -90,9 +102,20 @@ export default function MenuCategory({ category, index }: MenuCategoryProps) {
                 <h3 className="text-lg font-bold text-gray-900 flex-1">
                   {item.name}
                 </h3>
-                <span className="text-lg font-bold text-[#C84B6B] ml-2">
-                  ${(item.price / 100).toFixed(2)}
-                </span>
+                {item.smallPrice && item.largePrice ? (
+                  <div className="flex flex-col items-end ml-2">
+                    <span className="text-sm font-bold text-[#C84B6B]">
+                      Small: ${(item.smallPrice / 100).toFixed(2)}
+                    </span>
+                    <span className="text-sm font-bold text-[#C84B6B]">
+                      Large: ${(item.largePrice / 100).toFixed(2)}
+                    </span>
+                  </div>
+                ) : (
+                  <span className="text-lg font-bold text-[#C84B6B] ml-2">
+                    ${(item.price / 100).toFixed(2)}
+                  </span>
+                )}
               </div>
               {item.description && (
                 <p className="text-sm text-gray-600 leading-relaxed mb-2">
@@ -125,6 +148,12 @@ export default function MenuCategory({ category, index }: MenuCategoryProps) {
                       </motion.span>
                     ))}
                   </div>
+                  {category.id === "bagels" && (
+                    <p className="text-xs text-gray-600 mt-2 italic">
+                      *Flavored bagels (Everything, Sesame Seed, Jalapeño) +
+                      $0.50
+                    </p>
+                  )}
                 </div>
               )}
             </div>

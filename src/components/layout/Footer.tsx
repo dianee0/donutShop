@@ -1,6 +1,23 @@
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
-export default function Footer() {
+export default async function Footer() {
+  // Fetch latest website update info (exclude expired)
+  const now = new Date();
+  const latestUpdate = await prisma.announcement.findFirst({
+    where: {
+      isActive: true,
+      type: "info",
+      OR: [
+        { expiresAt: null }, // Never expires
+        { expiresAt: { gt: now } }, // Not yet expired
+      ],
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+  });
+
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -17,6 +34,11 @@ export default function Footer() {
               Serving fresh donuts and bagels daily since 1998. Made with love,
               served with a smile.
             </p>
+            {latestUpdate && (
+              <div className="mt-4 text-xs text-gray-500">
+                <p>Last Updated: {latestUpdate.message}</p>
+              </div>
+            )}
           </div>
 
           {/* Quick Links */}

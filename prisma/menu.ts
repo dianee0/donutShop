@@ -16,7 +16,7 @@ async function main() {
   for (const category of categories) {
     await prisma.menuCategory.upsert({
       where: { id: category.id },
-      update: {},
+      update: category,
       create: category,
     });
   }
@@ -28,7 +28,7 @@ async function main() {
       id: "raised-donut",
       name: "Raised Donut",
       description: "Light and airy raised donut.",
-      price: 199,
+      price: 165,
       flavors: "Glaze, Maple, Sugar, Crumb",
       categoryId: "donuts",
     },
@@ -36,7 +36,7 @@ async function main() {
       id: "vanilla-cake-donut",
       name: "Vanilla Cake Donut",
       description: "Soft vanilla cake donut.",
-      price: 229,
+      price: 165,
       flavors:
         "Vanilla Frosting, Strawberry Frosting, Chocolate Frosting, Maple Frosting",
       categoryId: "donuts",
@@ -45,14 +45,14 @@ async function main() {
       id: "chocolate-cake-donut",
       name: "Chocolate Cake Donut",
       description: "Rich chocolate cake donut with chocolate frosting.",
-      price: 249,
+      price: 165,
       categoryId: "donuts",
     },
     {
-      id: "glazed-bar",
-      name: "Glazed Bar",
-      description: "Classic glazed bar.",
-      price: 249,
+      id: "raised-bar",
+      name: "Raised Bar",
+      description: "Classic bar glazed with chocolate or maple.",
+      price: 200,
       flavors: "Chocolate, Maple",
       categoryId: "donuts",
     },
@@ -60,7 +60,7 @@ async function main() {
       id: "custard-filled-bar",
       name: "Custard Filled Bar",
       description: "Glazed bar filled with smooth custard.",
-      price: 349,
+      price: 275,
       flavors: "Chocolate, Maple",
       categoryId: "donuts",
     },
@@ -68,7 +68,7 @@ async function main() {
       id: "old-fashioned",
       name: "Old Fashioned",
       description: "Traditional cake donut with a crispy exterior.",
-      price: 229,
+      price: 165,
       flavors: "Plain, Glazed, Blueberry, Maple, Chocolate",
       categoryId: "donuts",
     },
@@ -76,7 +76,7 @@ async function main() {
       id: "buttermilk-bar",
       name: "Buttermilk Bar",
       description: "Classic buttermilk bar.",
-      price: 229,
+      price: 200,
       flavors: "Plain, Glazed, Maple, Chocolate",
       categoryId: "donuts",
     },
@@ -84,7 +84,7 @@ async function main() {
       id: "filled-donut",
       name: "Filled Round Donut",
       description: "Soft donut with delicious filling.",
-      price: 299,
+      price: 250,
       flavors: "Jelly, Custard, Lemon",
       categoryId: "donuts",
     },
@@ -92,7 +92,7 @@ async function main() {
       id: "twist",
       name: "Twist",
       description: "Twisted donut with your choice of topping.",
-      price: 229,
+      price: 200,
       flavors: "Maple, Chocolate, Sugar, Glaze",
       categoryId: "donuts",
     },
@@ -103,14 +103,14 @@ async function main() {
       name: "Apple Fritter",
       description:
         "Large fritter loaded with apples and cinnamon, glazed to perfection.",
-      price: 399,
+      price: 275,
       categoryId: "specials",
     },
     {
       id: "cinnamon-roll",
       name: "Cinnamon Roll",
       description: "Warm, gooey cinnamon roll, glazed to perfection.",
-      price: 449,
+      price: 275,
       categoryId: "specials",
     },
     {
@@ -118,7 +118,7 @@ async function main() {
       name: "Bear Claw",
       description:
         "A claw shaped pastry filled with apples and cinnamon, glazed to perfection.",
-      price: 399,
+      price: 275,
       categoryId: "specials",
     },
 
@@ -127,36 +127,44 @@ async function main() {
       id: "plain-croissant",
       name: "Plain Croissant",
       description: "Flaky, buttery, and golden brown.",
-      price: 349,
+      price: 275,
       categoryId: "croissants",
     },
     {
       id: "filled-croissant",
       name: "Filled Croissant",
       description: "Flaky croissant with sweet fruit and cream filling.",
-      price: 449,
+      price: 300,
       flavors: "Strawberry & Cream, Pineapple & Cream, Blueberry & Cream",
       categoryId: "croissants",
     },
     {
       id: "ham-cheese-croissant",
       name: "Ham & Cheese Croissant",
-      description: "Savory croissant with ham and melted cheese.",
-      price: 599,
+      description: "Savory croissant with ham and swiss cheese.",
+      price: 530,
       categoryId: "croissants",
     },
     {
-      id: "ham-cheese-egg-croissant",
-      name: "Ham, Cheese & Egg Croissant",
-      description: "Hearty croissant with ham, cheese, and egg.",
-      price: 699,
+      id: "egg-bacon-croissant",
+      name: "Egg & Bacon Croissant",
+      description: "Croissant with egg and bacon.",
+      price: 650,
+      categoryId: "croissants",
+    },
+    {
+      id: "ham-cheese-egg-or-bacon-croissant",
+      name: "Ham, Cheese & Egg or Bacon Croissant",
+      description:
+        "A croissant with ham, cheese, and a choice of egg or bacon.",
+      price: 800,
       categoryId: "croissants",
     },
     {
       id: "breakfast-croissant",
       name: "Breakfast Style Croissant",
       description: "Loaded with ham, cheese, egg, and bacon.",
-      price: 799,
+      price: 900,
       categoryId: "croissants",
     },
 
@@ -164,16 +172,41 @@ async function main() {
     {
       id: "plain-bagel",
       name: "Plain Bagel",
-      description: "Classic bagel, toasted to perfection.",
-      price: 199,
+      description: "A classic plain bagel.",
+      price: 225,
       flavors: "Regular, Jalapeño, Sesame Seed, Everything",
       categoryId: "bagels",
     },
     {
-      id: "loaded-bagel",
-      name: "Ham, Cheese & Cream Cheese Bagel",
-      description: "Bagel loaded with ham, cheese, and cream cheese.",
-      price: 599,
+      id: "cream-cheese-bagel",
+      name: "Cream Cheese Bagel",
+      description: "Classic bagel with cream cheese.",
+      price: 325,
+      flavors: "Regular, Jalapeño, Sesame Seed, Everything",
+      categoryId: "bagels",
+    },
+    {
+      id: "ham-cheese-bagel",
+      name: "Ham & Cheese Bagel",
+      description: "Bagel loaded with ham and cheese",
+      price: 530,
+      flavors: "Regular, Jalapeño, Sesame Seed, Everything",
+      categoryId: "bagels",
+    },
+    {
+      id: "ham-cheese-egg-or-bacon-bagel",
+      name: "Ham & Cheese & Egg or Bacon Bagel",
+      description:
+        "Bagel loaded with ham, cheese, and a choice of egg or bacon.",
+      price: 800,
+      flavors: "Regular, Jalapeño, Sesame Seed, Everything",
+      categoryId: "bagels",
+    },
+    {
+      id: "ham-cheese-egg-bacon-bagel",
+      name: "Ham & Cheese & Egg and Bacon Bagel",
+      description: "Bagel loaded with ham, cheese, egg and bacon.",
+      price: 900,
       flavors: "Regular, Jalapeño, Sesame Seed, Everything",
       categoryId: "bagels",
     },
@@ -182,23 +215,40 @@ async function main() {
     {
       id: "regular-coffee",
       name: "Regular Coffee",
-      description: "Freshly brewed, hot and aromatic.",
-      price: 249,
+      description:
+        "Hot freshly brewed coffee, with self-serve cream and sugar.",
+      price: 245,
+      smallPrice: 245,
+      largePrice: 295,
       categoryId: "drinks",
     },
     {
       id: "hot-cappuccino",
       name: "Hot Cappuccino",
-      description: "Rich espresso with velvety foam.",
-      price: 449,
+      description:
+        "A warm cup of cappuccino, sourced from farmer brothers coffee.",
+      price: 345,
+      smallPrice: 345,
+      largePrice: 425,
       flavors: "Mocha, Vanilla",
       categoryId: "drinks",
     },
     {
       id: "hot-chocolate",
       name: "Hot Chocolate",
-      description: "Creamy and rich with whipped cream.",
-      price: 349,
+      description:
+        "A warm cup of hot chocolate, sourced from farmer brothers coffee.",
+      price: 345,
+      smallPrice: 345,
+      largePrice: 425,
+      categoryId: "drinks",
+    },
+    {
+      id: "iced-drinks",
+      name: "Iced Drinks",
+      description:
+        "A cold cup of iced vietnemese coffee, iced green tea matcha, or thai iced tea.",
+      price: 395,
       categoryId: "drinks",
     },
   ];
@@ -207,15 +257,45 @@ async function main() {
   for (const item of menuItems) {
     await prisma.menuItem.upsert({
       where: { id: item.id },
-      update: {},
+      update: item,
       create: item,
+    });
+  }
+
+  // Define announcements
+  const announcements = [
+    {
+      id: "website-launch",
+      title: "Website Last Updated",
+      message: "November 19, 2025",
+      type: "info",
+      isActive: true,
+      expiresAt: null, // Website info doesn't expire
+    },
+    {
+      id: "holiday-hours",
+      title: "Holiday Hours",
+      message:
+        "We will be closed on November 27 and 28 for Thanksgiving. Happy Thanksgiving!",
+      type: "warning",
+      isActive: true,
+      expiresAt: new Date("2025-11-29T00:00:00"), // Expires after Thanksgiving weekend
+    },
+  ];
+
+  // Create announcements
+  for (const announcement of announcements) {
+    await prisma.announcement.upsert({
+      where: { id: announcement.id },
+      update: announcement,
+      create: announcement,
     });
   }
 }
 
 main()
   .then(async () => {
-    console.log("✅ Database seeded!");
+    console.log("Database seeded.");
     await prisma.$disconnect();
   })
   .catch(async (e) => {

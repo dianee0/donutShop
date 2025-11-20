@@ -4,9 +4,61 @@ import Image from "next/image";
 import Button from "@/components/ui/Button";
 import { motion } from "framer-motion";
 
-export default function Hero() {
+interface Announcement {
+  id: string;
+  title: string;
+  message: string;
+  type: string;
+  isActive: boolean;
+  expiresAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface HeroProps {
+  announcements?: Announcement[];
+}
+
+export default function Hero({ announcements = [] }: HeroProps) {
+  const getTypeStyles = (type: string) => {
+    switch (type) {
+      case "warning":
+        return {
+          bg: "bg-orange-50",
+          border: "border-orange-200",
+          icon: "⚠️",
+          textColor: "text-orange-900",
+          titleColor: "text-orange-800",
+        };
+      case "success":
+        return {
+          bg: "bg-green-50",
+          border: "border-green-200",
+          icon: "✓",
+          textColor: "text-green-900",
+          titleColor: "text-green-800",
+        };
+      case "error":
+        return {
+          bg: "bg-red-50",
+          border: "border-red-200",
+          icon: "✕",
+          textColor: "text-red-900",
+          titleColor: "text-red-800",
+        };
+      default: // info
+        return {
+          bg: "bg-blue-50",
+          border: "border-blue-200",
+          icon: "ℹ",
+          textColor: "text-blue-900",
+          titleColor: "text-blue-800",
+        };
+    }
+  };
+
   return (
-    <section className="bg-[#FFF9F0] relative overflow-hidden min-h-[calc(100vh-80px)]">
+    <section className="bg-[#FFF9F0] relative overflow-hidden">
       {/* Heart trail SVG on left */}
       <motion.div
         className="absolute left-0 top-1/2 -translate-y-1/2 opacity-70 hidden lg:block"
@@ -29,7 +81,7 @@ export default function Hero() {
         </svg>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative z-10 flex items-center min-h-[calc(100vh-80px)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative z-10 flex items-center min-h-[calc(100vh-160px)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="space-y-6">
@@ -125,7 +177,7 @@ export default function Hero() {
                 duration: 1.2,
                 ease: "easeOut",
               }}
-              className="w-full h-full"
+              className="relative w-full h-full"
             >
               <Image
                 src="/donuts-hero.png"
@@ -139,6 +191,40 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
+
+      {/* Announcements Section */}
+      {announcements.length > 0 && (
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 relative z-10">
+          <div className="space-y-3">
+            {announcements.map((announcement, index) => {
+              const styles = getTypeStyles(announcement.type);
+              return (
+                <motion.div
+                  key={announcement.id}
+                  className={`${styles.bg} ${styles.border} border rounded-xl p-4 shadow-sm`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1.4 + index * 0.1 }}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="text-xl flex-shrink-0">{styles.icon}</div>
+                    <div className="flex-1 min-w-0">
+                      <h3
+                        className={`${styles.titleColor} font-bold text-base mb-1`}
+                      >
+                        {announcement.title}
+                      </h3>
+                      <p className={`${styles.textColor} text-sm`}>
+                        {announcement.message}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
