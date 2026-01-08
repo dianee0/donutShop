@@ -3,6 +3,7 @@
 import { motion, animate } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useEffect } from "react";
+import { asset } from "@/lib/assets";
 
 function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -43,24 +44,26 @@ export default function Story() {
           >
             <div className="relative bg-[#FFF9F0] rounded-3xl p-8 lg:p-12 shadow-lg">
               <div className="space-y-6">
-                <div className="text-6xl lg:text-7xl"></div>
-                <div className="flex gap-3 items-center">
-                  {/* placeholder images*/}
-                  <img
-                    src="/donuts-hero.png"
-                    alt="Donuts"
-                    className="w-50 h-80"
-                  />
-                  <div className="flex flex-col gap-3">
+                <div className="flex gap-3 items-stretch h-[280px] sm:h-[320px] lg:h-[360px]">
+                  {/* Left tall image */}
+                  <div className="w-2/5 flex-shrink-0">
                     <img
-                      src="/donuts-hero.png"
-                      alt="Donuts"
-                      className="w-80 h-40"
+                      src={asset("/hero/cake-donuts.jpg")}
+                      alt="Freshly baked donuts"
+                      className="w-full h-full object-cover rounded-2xl"
+                    />
+                  </div>
+                  {/* Right stacked images */}
+                  <div className="flex-1 flex flex-col gap-3">
+                    <img
+                      src={asset("/hero/donut-rack.jpg")}
+                      alt="Donuts on cooling rack"
+                      className="w-full h-1/2 object-cover rounded-2xl"
                     />
                     <img
-                      src="/donuts-hero.png"
-                      alt="Donuts"
-                      className="w-80 h-40"
+                      src={asset("/hero/cutting-donuts.jpg")}
+                      alt="Cutting fresh donuts"
+                      className="w-full h-1/2 object-cover rounded-2xl"
                     />
                   </div>
                 </div>
