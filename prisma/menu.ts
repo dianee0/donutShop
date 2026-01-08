@@ -1,6 +1,19 @@
+import { config } from "dotenv";
+import { resolve } from "path";
+// Load .env file for seed script (runs outside Next.js)
+config({ path: resolve(__dirname, "../.env") });
+
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+
+// Build asset URL (couldn't use imported asset() b/c of import issues)
+function asset(path: string): string {
+  const baseUrl = process.env.NEXT_PUBLIC_ASSET_BASE_URL ?? "";
+  if (!baseUrl) return path;
+  const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+  return `${baseUrl}/${cleanPath}`;
+}
 
 async function main() {
   // Define categories
@@ -29,6 +42,7 @@ async function main() {
       name: "Raised Donut",
       description: "Light and airy raised donut.",
       price: 165,
+      imageUrl: asset("/menu/raised-glaze.jpg"),
       flavors: "Glaze, Maple, Sugar, Crumb",
       categoryId: "donuts",
     },
@@ -37,6 +51,7 @@ async function main() {
       name: "Vanilla Cake Donut",
       description: "Soft vanilla cake donut.",
       price: 165,
+      imageUrl: null,
       flavors:
         "Vanilla Frosting, Strawberry Frosting, Chocolate Frosting, Maple Frosting",
       categoryId: "donuts",
@@ -46,6 +61,7 @@ async function main() {
       name: "Chocolate Cake Donut",
       description: "Rich chocolate cake donut with chocolate frosting.",
       price: 165,
+      imageUrl: null,
       categoryId: "donuts",
     },
     {
@@ -53,6 +69,7 @@ async function main() {
       name: "Raised Bar",
       description: "Classic bar glazed with chocolate or maple.",
       price: 200,
+      imageUrl: null,
       flavors: "Chocolate, Maple",
       categoryId: "donuts",
     },
@@ -61,6 +78,7 @@ async function main() {
       name: "Custard Filled Bar",
       description: "Glazed bar filled with smooth custard.",
       price: 275,
+      imageUrl: asset("/menu/filled-bars.jpg"),
       flavors: "Chocolate, Maple",
       categoryId: "donuts",
     },
@@ -69,6 +87,7 @@ async function main() {
       name: "Old Fashioned",
       description: "Traditional cake donut with a crispy exterior.",
       price: 165,
+      imageUrl: asset("/menu/old-fashion-glaze.jpg"),
       flavors: "Plain, Glazed, Blueberry, Maple, Chocolate",
       categoryId: "donuts",
     },
@@ -77,6 +96,7 @@ async function main() {
       name: "Buttermilk Bar",
       description: "Classic buttermilk bar.",
       price: 200,
+      imageUrl: asset("/menu/buttermilk-glaze.jpg"),
       flavors: "Plain, Glazed, Maple, Chocolate",
       categoryId: "donuts",
     },
@@ -85,6 +105,7 @@ async function main() {
       name: "Filled Round Donut",
       description: "Soft donut with delicious filling.",
       price: 250,
+      imageUrl: asset("/menu/filled-rounds.jpg"),
       flavors: "Jelly, Custard, Lemon",
       categoryId: "donuts",
     },
@@ -93,6 +114,7 @@ async function main() {
       name: "Twist",
       description: "Twisted donut with your choice of topping.",
       price: 200,
+      imageUrl: asset("/menu/twists.jpg"),
       flavors: "Maple, Chocolate, Sugar, Glaze",
       categoryId: "donuts",
     },
@@ -104,6 +126,7 @@ async function main() {
       description:
         "Large fritter loaded with apples and cinnamon, glazed to perfection.",
       price: 275,
+      imageUrl: asset("/menu/apple-fritt.jpg"),
       categoryId: "specials",
     },
     {
@@ -111,6 +134,7 @@ async function main() {
       name: "Cinnamon Roll",
       description: "Warm, gooey cinnamon roll, glazed to perfection.",
       price: 275,
+      imageUrl: asset("/menu/cinn-roll.jpg"),
       categoryId: "specials",
     },
     {
@@ -119,6 +143,7 @@ async function main() {
       description:
         "A claw shaped pastry filled with apples and cinnamon, glazed to perfection.",
       price: 275,
+      imageUrl: asset("/menu/bear-claw.jpg"),
       categoryId: "specials",
     },
 
@@ -128,6 +153,7 @@ async function main() {
       name: "Plain Croissant",
       description: "Flaky, buttery, and golden brown.",
       price: 275,
+      imageUrl: null,
       categoryId: "croissants",
     },
     {
@@ -135,6 +161,7 @@ async function main() {
       name: "Filled Croissant",
       description: "Flaky croissant with sweet fruit and cream filling.",
       price: 300,
+      imageUrl: null,
       flavors: "Strawberry & Cream, Pineapple & Cream, Blueberry & Cream",
       categoryId: "croissants",
     },
@@ -143,6 +170,7 @@ async function main() {
       name: "Ham & Cheese Croissant",
       description: "Savory croissant with ham and swiss cheese.",
       price: 530,
+      imageUrl: null,
       categoryId: "croissants",
     },
     {
@@ -150,6 +178,7 @@ async function main() {
       name: "Egg & Bacon Croissant",
       description: "Croissant with egg and bacon.",
       price: 650,
+      imageUrl: null,
       categoryId: "croissants",
     },
     {
@@ -158,6 +187,7 @@ async function main() {
       description:
         "A croissant with ham, cheese, and a choice of egg or bacon.",
       price: 800,
+      imageUrl: null,
       categoryId: "croissants",
     },
     {
@@ -165,6 +195,7 @@ async function main() {
       name: "Breakfast Style Croissant",
       description: "Loaded with ham, cheese, egg, and bacon.",
       price: 900,
+      imageUrl: asset("/menu/croissant-CHEB.jpg"),
       categoryId: "croissants",
     },
 
@@ -175,6 +206,7 @@ async function main() {
       description: "A classic plain bagel.",
       price: 225,
       flavors: "Regular, Jalapeño, Sesame Seed, Everything",
+      imageUrl: null,
       categoryId: "bagels",
     },
     {
@@ -183,6 +215,7 @@ async function main() {
       description: "Classic bagel with cream cheese.",
       price: 325,
       flavors: "Regular, Jalapeño, Sesame Seed, Everything",
+      imageUrl: null,
       categoryId: "bagels",
     },
     {
@@ -191,6 +224,7 @@ async function main() {
       description: "Bagel loaded with ham and cheese",
       price: 530,
       flavors: "Regular, Jalapeño, Sesame Seed, Everything",
+      imageUrl: null,
       categoryId: "bagels",
     },
     {
@@ -200,6 +234,7 @@ async function main() {
         "Bagel loaded with ham, cheese, and a choice of egg or bacon.",
       price: 800,
       flavors: "Regular, Jalapeño, Sesame Seed, Everything",
+      imageUrl: null,
       categoryId: "bagels",
     },
     {
@@ -208,6 +243,7 @@ async function main() {
       description: "Bagel loaded with ham, cheese, egg and bacon.",
       price: 900,
       flavors: "Regular, Jalapeño, Sesame Seed, Everything",
+      imageUrl: null,
       categoryId: "bagels",
     },
 
@@ -220,6 +256,7 @@ async function main() {
       price: 245,
       smallPrice: 245,
       largePrice: 295,
+      imageUrl: null,
       categoryId: "drinks",
     },
     {
@@ -231,6 +268,7 @@ async function main() {
       smallPrice: 345,
       largePrice: 425,
       flavors: "Mocha, Vanilla",
+      imageUrl: null,
       categoryId: "drinks",
     },
     {
@@ -241,6 +279,7 @@ async function main() {
       price: 345,
       smallPrice: 345,
       largePrice: 425,
+      imageUrl: null,
       categoryId: "drinks",
     },
     {
@@ -249,6 +288,7 @@ async function main() {
       description:
         "A cold cup of iced vietnemese coffee, iced green tea matcha, or thai iced tea.",
       price: 395,
+      imageUrl: null,
       categoryId: "drinks",
     },
   ];

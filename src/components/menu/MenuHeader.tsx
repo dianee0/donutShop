@@ -1,18 +1,25 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { asset } from "@/lib/assets";
 
 export default function MenuHeader() {
   return (
-    <section className="bg-[#FFF9F0] py-16 lg:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section
+      className="py-16 lg:py-20 relative bg-cover bg-center"
+      style={{ backgroundImage: `url(${asset("/hero/DONUT-DOUGH.jpg")})` }}
+    >
+      {/* Overlay for text readability */}
+      <div className="absolute inset-0 bg-[#FFF9F0]/80" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <motion.div
           className="inline-block mb-4"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <span className="text-sm font-semibold text-[#C84B6B] tracking-widest uppercase bg-white px-4 py-2 rounded-full">
+          <span className="text-sm font-semibold text-[#C84B6B] tracking-widest uppercase bg-white px-4 py-2 rounded-full shadow-sm">
             Our Menu
           </span>
         </motion.div>
@@ -36,4 +43,3 @@ export default function MenuHeader() {
     </section>
   );
 }
-
