@@ -1,0 +1,12 @@
+name = "donutshop"
+compatibility_date = "2026-01-08"
+compatibility_flags = ["nodejs_compat"]
+
+# Development database (used with wrangler dev / local testing)
+[[d1_databases]]
+binding = "DB"
+database_name = "donutshop-dev"
+database_id = "61803cb8-b818-41ab-8932-afebe9ad69ad"
+
+# Production database configuration is set in Cloudflare Pages dashboard
+# The binding name "DB" will connect to donutshop-prod when deployed

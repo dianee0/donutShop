@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import { motion } from "framer-motion";
+import { asset } from "@/lib/assets";
 
 interface Announcement {
   id: string;
@@ -180,7 +181,7 @@ export default function Hero({ announcements = [] }: HeroProps) {
               className="relative w-full h-full"
             >
               <Image
-                src="/donuts-hero.png"
+                src={asset("/hero/donuts-hero.png")}
                 alt="Colorful fresh donuts with sprinkles"
                 fill
                 className="object-cover"

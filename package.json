@@ -8,9 +8,19 @@
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate",
-    "clean-install": "rm -rf node_modules package-lock.json && npm install"
+    "clean-install": "rm -rf node_modules package-lock.json && npm install",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "pages:preview": "npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat",
+    "pages:preview:init": "npx wrangler d1 execute donutshop-dev --file=prisma/d1-schema.sql --local && npx wrangler d1 execute donutshop-dev --file=prisma/d1-seed.sql --local",
+    "pages:deploy": "npx wrangler pages deploy .vercel/output/static",
+    "db:schema:dev": "npx wrangler d1 execute donutshop-dev --file=prisma/d1-schema.sql --remote",
+    "db:seed:dev": "npx wrangler d1 execute donutshop-dev --file=prisma/d1-seed.sql --remote",
+    "db:schema:prod": "npx wrangler d1 execute donutshop-prod --file=prisma/d1-schema.sql --remote",
+    "db:seed:prod": "npx wrangler d1 execute donutshop-prod --file=prisma/d1-seed.sql --remote",
+    "db:sync": "npm run db:schema:dev && npm run db:seed:dev && npm run db:schema:prod && npm run db:seed:prod"
   },
   "dependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
     "@prisma/client": "^6.15.0",
     "dotenv": "^17.2.3",
     "framer-motion": "^11.15.0",
@@ -19,7 +29,9 @@
     "react-dom": "19.1.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260108.0",
     "@eslint/eslintrc": "^3",
+    "@prisma/adapter-d1": "^7.2.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -30,9 +42,7 @@
     "prisma": "^6.15.0",
     "tailwindcss": "^3.4.17",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/menu.ts"
+    "typescript": "^5",
+    "wrangler": "^4.58.0"
   }
 }

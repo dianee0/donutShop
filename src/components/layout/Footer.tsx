@@ -1,7 +1,18 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
+import { getRequestContext } from "@cloudflare/next-on-pages";
 
 export default async function Footer() {
+  // Get D1 binding on Cloudflare, undefined locally
+  let env;
+  try {
+    env = getRequestContext().env;
+  } catch {
+    env = undefined;
+  }
+
+  const prisma = getPrisma(env);
+
   // Fetch latest website update info (exclude expired)
   const now = new Date();
   const latestUpdate = await prisma.announcement.findFirst({

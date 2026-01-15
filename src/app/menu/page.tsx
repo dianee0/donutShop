@@ -1,9 +1,23 @@
-import { prisma } from "@/lib/prisma";
+import { getPrisma } from "@/lib/prisma";
+import { getRequestContext } from "@cloudflare/next-on-pages";
 import MenuHeader from "@/components/menu/MenuHeader";
 import MenuCategory from "@/components/menu/MenuCategory";
 import MenuCTA from "@/components/menu/MenuCTA";
 
+export const runtime = "edge";
+
 export default async function MenuPage() {
+  // Get D1 binding on Cloudflare, undefined locally
+  let env;
+  try {
+    env = getRequestContext().env;
+  } catch {
+    // Running locally without Cloudflare context
+    env = undefined;
+  }
+
+  const prisma = getPrisma(env);
+
   // Fetch all categories and their items
   const categories = await prisma.menuCategory.findMany({
     include: {
