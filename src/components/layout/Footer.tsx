@@ -14,20 +14,26 @@ export default async function Footer() {
   const prisma = getPrisma(env);
 
   // Fetch latest website update info (exclude expired)
-  const now = new Date();
-  const latestUpdate = await prisma.announcement.findFirst({
-    where: {
-      isActive: true,
-      type: "info",
-      OR: [
-        { expiresAt: null }, // Never expires
-        { expiresAt: { gt: now } }, // Not yet expired
-      ],
-    },
-    orderBy: {
-      updatedAt: "desc",
-    },
-  });
+  // Wrapped in try-catch for build-time when DB may not exist
+  let latestUpdate = null;
+  try {
+    const now = new Date();
+    latestUpdate = await prisma.announcement.findFirst({
+      where: {
+        isActive: true,
+        type: "info",
+        OR: [
+          { expiresAt: null }, // Never expires
+          { expiresAt: { gt: now } }, // Not yet expired
+        ],
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+  } catch {
+    // Database not available during build - skip
+  }
 
   return (
     <footer className="bg-gray-900 text-gray-300">
