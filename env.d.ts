@@ -11,3 +11,11 @@ declare module "@cloudflare/next-on-pages" {
     cf: IncomingRequestCfProperties;
   };
 }
+
+declare namespace NodeJS {
+  interface ProcessEnv {
+    RESEND_API_KEY?: string;
+    CONTACT_NOTIFICATION_EMAIL?: string;
+    CONTACT_FROM_EMAIL?: string;
+  }
+}
