@@ -2,6 +2,8 @@ import ContactForm from "@/components/contact/ContactForm";
 import ContactInfo from "@/components/contact/ContactInfo";
 import { asset } from "@/lib/assets";
 
+export const runtime = "edge";
+
 export default function ContactPage() {
   return (
     <main className="min-h-screen bg-white">

@@ -2,38 +2,28 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useActionState, useEffect, useState } from "react";
+import { submitContactForm, type ContactFormState } from "@/app/contact/actions";
 
 export default function ContactForm() {
   const ref = useRef(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
+  const [state, formAction, isPending] = useActionState<ContactFormState, FormData>(
+    submitContactForm,
+    null
+  );
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log("Form submitted:", formState);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormState({ name: "", email: "", phone: "", message: "" });
-    }, 5000);
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // Reset form and show success message when submission succeeds
+  useEffect(() => {
+    if (state?.success) {
+      setShowSuccess(true);
+      formRef.current?.reset();
+      const timer = setTimeout(() => setShowSuccess(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [state]);
 
   return (
     <div ref={ref}>
@@ -62,7 +52,18 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {submitted ? (
+          {/* Error message */}
+          {state && !state.success && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4"
+            >
+              <p className="text-red-700 text-sm">{state.message}</p>
+            </motion.div>
+          )}
+
+          {showSuccess ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -77,7 +78,7 @@ export default function ContactForm() {
               </p>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form ref={formRef} action={formAction} className="space-y-5">
               {/* Name */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -96,10 +97,9 @@ export default function ContactForm() {
                   type="text"
                   id="name"
                   name="name"
-                  value={formState.name}
-                  onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C84B6B] focus:border-transparent outline-none transition-all"
+                  disabled={isPending}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C84B6B] focus:border-transparent outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                   placeholder="Your full name"
                 />
               </motion.div>
@@ -122,10 +122,9 @@ export default function ContactForm() {
                   type="email"
                   id="email"
                   name="email"
-                  value={formState.email}
-                  onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C84B6B] focus:border-transparent outline-none transition-all"
+                  disabled={isPending}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C84B6B] focus:border-transparent outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                   placeholder="your.email@example.com"
                 />
               </motion.div>
@@ -148,9 +147,8 @@ export default function ContactForm() {
                   type="tel"
                   id="phone"
                   name="phone"
-                  value={formState.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C84B6B] focus:border-transparent outline-none transition-all"
+                  disabled={isPending}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C84B6B] focus:border-transparent outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
                   placeholder="(123) 456-7890"
                 />
               </motion.div>
@@ -172,11 +170,10 @@ export default function ContactForm() {
                 <textarea
                   id="message"
                   name="message"
-                  value={formState.message}
-                  onChange={handleChange}
                   required
+                  disabled={isPending}
                   rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C84B6B] focus:border-transparent outline-none transition-all resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C84B6B] focus:border-transparent outline-none transition-all resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                   placeholder="Tell us what's on your mind..."
                 />
               </motion.div>
@@ -191,11 +188,38 @@ export default function ContactForm() {
               >
                 <motion.button
                   type="submit"
-                  className="w-full bg-[#C84B6B] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#B03A5A] transition-colors duration-200"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={isPending}
+                  className="w-full bg-[#C84B6B] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#B03A5A] transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  whileHover={isPending ? {} : { scale: 1.02 }}
+                  whileTap={isPending ? {} : { scale: 0.98 }}
                 >
-                  Send Message
+                  {isPending ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg
+                        className="animate-spin h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : (
+                    "Send Message"
+                  )}
                 </motion.button>
               </motion.div>
             </form>

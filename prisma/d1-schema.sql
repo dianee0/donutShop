@@ -41,7 +41,18 @@ CREATE TABLE IF NOT EXISTS Announcement (
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Contact Submissions table
+CREATE TABLE IF NOT EXISTS ContactSubmission (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT,
+    message TEXT NOT NULL,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_menuitem_categoryid ON MenuItem(categoryId);
 CREATE INDEX IF NOT EXISTS idx_menuitem_isactive ON MenuItem(isActive);
 CREATE INDEX IF NOT EXISTS idx_announcement_isactive ON Announcement(isActive);
+CREATE INDEX IF NOT EXISTS idx_contactsubmission_createdat ON ContactSubmission(createdAt);
