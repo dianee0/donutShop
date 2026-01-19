@@ -7,10 +7,11 @@ Built as a real-world Cloudflare Pages + D1 reference project emphasizing edge d
 ## Quick Start
 
 ```bash
-npm install              # Install dependencies
-npx wrangler login       # Authenticate with Cloudflare
-npx prisma generate      # Generate Prisma Client
-npm run dev              # Start dev server → localhost:3000
+npm install                      # Install dependencies
+npx wrangler login               # Authenticate with Cloudflare
+npx prisma generate              # Generate Prisma Client
+npm run pages:build              # Build for Cloudflare
+npm run pages:preview:init       # Initialize local D1 & start server → localhost:8788
 ```
 
 ---
@@ -23,24 +24,26 @@ npm run dev              # Start dev server → localhost:3000
 - **Database:** Cloudflare D1 (SQLite at edge)
 - **ORM:** Prisma + D1 adapter
 - **Images:** Cloudflare R2
+- **Email:** Resend (contact form notifications)
 - **Hosting:** Cloudflare Pages
 
 ---
 
 ## Commands Reference
 
-| Command                      | What it does                                |
-| ---------------------------- | ------------------------------------------- |
-| `npm run dev`                | Dev server (localhost:3000) - **use daily** |
-| `npm run pages:build`        | Build app for Cloudflare Pages              |
-| `npm run pages:preview`      | Preview build (localhost:8788)              |
-| `npm run pages:preview:init` | Initialize local D1                         |
-| `npm run pages:deploy`       | Deploy to production                        |
-| `npm run db:schema:dev`      | Apply schema to dev DB                      |
-| `npm run db:seed:dev`        | Seed dev DB                                 |
-| `npm run db:schema:prod`     | Apply schema to prod DB                     |
-| `npm run db:seed:prod`       | Seed prod DB                                |
-| `npm run db:sync`            | Sync both DBs                               |
+| Command                      | What it does                                     |
+| ---------------------------- | ------------------------------------------------ |
+| `npm run pages:build`        | Build app for Cloudflare Pages                   |
+| `npm run pages:preview`      | Preview build (localhost:8788) - **use daily**   |
+| `npm run pages:preview:init` | Initialize local D1 + preview (first time only)  |
+| `npm run pages:deploy`       | Deploy to production                             |
+| `npm run db:schema:dev`      | Apply schema to remote dev DB                    |
+| `npm run db:seed:dev`        | Seed remote dev DB                               |
+| `npm run db:schema:prod`     | Apply schema to prod DB                          |
+| `npm run db:seed:prod`       | Seed prod DB                                     |
+| `npm run db:sync`            | Sync both DBs                                    |
+
+> **Note:** `npm run dev` does not work with edge runtime + D1. Use the Wrangler workflow instead.
 
 ### Warnings
 
@@ -55,15 +58,24 @@ npm run dev              # Start dev server → localhost:3000
 ### Daily Development
 
 ```bash
-npm run dev
+npm run pages:build && npm run pages:preview
 ```
+
+This runs the Cloudflare Pages environment locally with D1 database access.
 
 ### Database Changes
 
 ```bash
-npm run db:schema:dev    # Test on dev first
-npm run db:seed:dev      # Then seed dev
-# Only sync to prod when stable
+# 1. Update schema files
+#    - prisma/schema.prisma (Prisma model)
+#    - prisma/d1-schema.sql (D1 table)
+
+# 2. Regenerate Prisma client
+npx prisma generate
+
+# 3. Apply to databases
+npm run db:schema:dev    # Remote dev DB
+npm run pages:preview:init  # Local DB (if testing locally)
 ```
 
 ### Deploy
@@ -94,10 +106,52 @@ npm run pages:deploy
    ```
 
 3. Authenticate and generate:
+
    ```bash
    npx wrangler login
    npx prisma generate
    ```
+
+4. Set up local environment variables (for contact form emails):
+
+   Create `.dev.vars` in project root:
+
+   ```env
+   RESEND_API_KEY=re_your_api_key
+   CONTACT_NOTIFICATION_EMAIL=your-email@gmail.com
+   CONTACT_FROM_EMAIL=contact@yourdomain.com
+   ```
+
+5. Add secrets to Cloudflare (for production):
+   ```bash
+   npx wrangler pages secret put RESEND_API_KEY
+   npx wrangler pages secret put CONTACT_NOTIFICATION_EMAIL
+   npx wrangler pages secret put CONTACT_FROM_EMAIL
+   ```
+
+---
+
+## Contact Form
+
+The contact form saves submissions to D1 and sends email notifications via Resend.
+
+| Feature              | Description                                    |
+| -------------------- | ---------------------------------------------- |
+| Database storage     | All submissions saved to `ContactSubmission`   |
+| Email notifications  | Sent via Resend to configured email            |
+| Graceful degradation | If email fails, submission still saves         |
+
+### View Submissions
+
+```bash
+# Local database
+npx wrangler d1 execute donutshop-dev --local --command="SELECT * FROM ContactSubmission ORDER BY createdAt DESC"
+
+# Remote database
+npx wrangler d1 execute donutshop-dev --remote --command="SELECT * FROM ContactSubmission ORDER BY createdAt DESC"
+```
+
+Or view in Cloudflare Dashboard: **Workers & Pages** → **D1 SQL Database** → **Console**
 
 ---
 
@@ -114,9 +168,10 @@ Schema and seed managed via SQL files:
 
 ## Troubleshooting
 
-| Issue            | Fix                              |
-| ---------------- | -------------------------------- |
-| Port 3000 in use | `lsof -ti:3000 \| xargs kill -9` |
-| Port 8788 in use | `lsof -ti:8788 \| xargs kill -9` |
-| Auth expired     | `npx wrangler login`             |
-| Local D1 empty   | `npm run pages:preview:init`     |
+| Issue              | Fix                              |
+| ------------------ | -------------------------------- |
+| Port 8788 in use   | `lsof -ti:8788 \| xargs kill -9` |
+| Auth expired       | `npx wrangler login`             |
+| Local D1 empty     | `npm run pages:preview:init`     |
+| Prisma types stale | `npx prisma generate`            |
+| TS errors persist  | Restart TS Server in IDE         |
