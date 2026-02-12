@@ -4,37 +4,11 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { asset } from "@/lib/assets";
+import { locations as locationsData } from "@/lib/locations";
 
 export default function Locations() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const locations = [
-    {
-      name: "Fail's Donuts & Bagels",
-      address: "8414 Lander Ave",
-      city: "Hilmar, CA 95324",
-      phone: "(209) 667-4718",
-      hours: "4am - 12pm Mon-Sun",
-      image: asset("locations/hilmar-shop.jpg"),
-    },
-    {
-      name: "Jim's Donuts & Bagels",
-      address: "1915 N St",
-      city: "Newman, CA 95360",
-      phone: "(209) 862-2044",
-      hours: "Mon-Fri: 4:30am - 12pm\nSat: 5am - 12pm\nSun: 6am - 12pm",
-      image: asset("locations/newman-shop.jpg"),
-    },
-    {
-      name: "Jim's Donuts & Bagels",
-      address: "Schendel Ave. Ste 16385",
-      city: "Delhi, CA 95315",
-      phone: "(209) 634-0016",
-      hours: "6am - 12pm Mon-Sun",
-      image: asset("locations/delhi-shop.jpg"),
-    },
-  ];
 
   return (
     <section id="locations" className="bg-[#FFF9F0] py-20 lg:py-28" ref={ref}>
@@ -78,13 +52,13 @@ export default function Locations() {
 
         {/* Locations Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {locations.map((location, index) => (
+          {locationsData.map((location, index) => (
             <motion.div
               key={index}
               className="relative rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 overflow-hidden bg-cover bg-center"
               style={
-                location.image
-                  ? { backgroundImage: `url('${location.image}')` }
+                location.imagePath
+                  ? { backgroundImage: `url('${asset(location.imagePath)}')` }
                   : { backgroundColor: "white" }
               }
               initial={{ opacity: 0, y: 50 }}
@@ -96,7 +70,7 @@ export default function Locations() {
               }}
             >
               {/* Overlay for cards with background images */}
-              {location.image && (
+              {location.imagePath && (
                 <div className="absolute inset-0 bg-white/85" />
               )}
 

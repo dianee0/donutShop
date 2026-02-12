@@ -146,8 +146,8 @@ export default function Hero({ announcements = [] }: HeroProps) {
             >
               <img src="/heart-pixel.png" alt="Heart" width={24} height={24} />
               <p className="text-sm text-gray-600">
-                Open from <span className="font-semibold">4am to 12pm</span>{" "}
-                everyday.
+                Open early to noon—{" "}
+                <span className="font-semibold">hours vary by location</span>.
                 <br />
                 <span className="text-xs text-gray-500">
                   Select holidays excluded.

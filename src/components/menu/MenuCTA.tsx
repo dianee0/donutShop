@@ -25,7 +25,7 @@ export default function MenuCTA() {
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          All our treats are made fresh daily from 4am to 12pm
+          All our treats are made fresh daily. Hours vary by location.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -45,4 +45,3 @@ export default function MenuCTA() {
     </section>
   );
 }
-

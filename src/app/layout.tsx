@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Jim's Donuts & Bagels - Fresh Daily",
   description:
-    "Donuts Made Daily, Happiness Made Fresh. Open 4am-12pm everyday.",
+    "Donuts Made Daily, Happiness Made Fresh. Hours vary by location—open early to noon.",
 };
 
 export default function RootLayout({
