@@ -48,7 +48,7 @@ export default function ReviewsPage() {
               width={64}
               height={64}
               className="mx-auto"
-              title="Star icons created by Pixel perfect - Flaticon"
+              title="Star icon created by Pixel perfect - Flaticon"
             />
           </motion.div>
           <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
@@ -149,9 +149,9 @@ export default function ReviewsPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-gray-700 transition-colors"
-            title="star icons"
+            title="star icon"
           >
-            Star icons created by Pixel perfect - Flaticon
+            Star icon created by Pixel perfect - Flaticon
           </a>
         </motion.div>
       </div>
