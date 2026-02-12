@@ -58,8 +58,23 @@ export default function Hero({ announcements = [] }: HeroProps) {
     }
   };
 
+  const heroBgUrl = asset("hero/donut-frying.jpg");
+
   return (
-    <section className="bg-[#FFF9F0] relative overflow-hidden">
+    <section
+      className="relative overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: heroBgUrl ? `url('${heroBgUrl}')` : undefined,
+        backgroundColor: "#FFF9F0",
+      }}
+    >
+      {/* Overlay so content stays readable */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundColor: "rgba(255, 249, 240, 0.75)",
+        }}
+      />
       {/* Heart trail SVG on left */}
       <motion.div
         className="absolute left-0 top-1/2 -translate-y-1/2 opacity-70 hidden lg:block"
