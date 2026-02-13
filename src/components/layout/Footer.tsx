@@ -76,7 +76,7 @@ export default async function Footer() {
               </li>
               <li>
                 <Link
-                  href="/locations"
+                  href="/#locations"
                   className="hover:text-white transition-colors"
                 >
                   Locations
@@ -84,7 +84,7 @@ export default async function Footer() {
               </li>
               <li>
                 <Link
-                  href="/story"
+                  href="/#story"
                   className="hover:text-white transition-colors"
                 >
                   Our Story

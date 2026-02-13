@@ -58,7 +58,8 @@ export default function Hero({ announcements = [] }: HeroProps) {
     }
   };
 
-  const heroBgUrl = asset("hero/donut-frying.jpg");
+  // const heroBgUrl = asset("hero/donut-frying.jpg");
+  const heroBgUrl = undefined;
 
   return (
     <section
