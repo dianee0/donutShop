@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 import { asset } from "@/lib/assets";
 import { locations as locationsData } from "@/lib/locations";
@@ -55,26 +55,35 @@ export default function Locations() {
           {locationsData.map((location, index) => (
             <motion.div
               key={index}
-              className="relative rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 overflow-hidden bg-cover bg-center"
-              style={
-                location.imagePath
-                  ? { backgroundImage: `url('${asset(location.imagePath)}')` }
-                  : { backgroundColor: "white" }
-              }
+              className="rounded-2xl shadow-lg overflow-hidden"
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-              whileHover={{
-                scale: 1.03,
-                transition: { duration: 0.2 },
-              }}
             >
-              {/* Overlay for cards with background images */}
-              {location.imagePath && (
-                <div className="absolute inset-0 bg-white/85" />
-              )}
+              <motion.div
+                className="relative overflow-hidden rounded-2xl will-change-transform"
+                whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
+              >
+                {/* Image layer (GPU-composited) */}
+                {location.imagePath ? (
+                  <div className="absolute inset-0">
+                    <Image
+                      src={asset(location.imagePath)}
+                      alt={location.name}
+                      fill
+                      className="object-cover rounded-2xl"
+                    />
+                  </div>
+                ) : (
+                  <div className="absolute inset-0 bg-white" />
+                )}
 
-              <div className="relative z-10">
+                {/* Overlay for cards with background images */}
+                {location.imagePath && (
+                  <div className="absolute inset-0 bg-white/85" />
+                )}
+
+                <div className="relative z-10 p-6">
                 {/* Location Icon */}
                 <div className="w-12 h-12 bg-[#C84B6B] bg-opacity-10 rounded-full flex items-center justify-center mb-4">
                   <motion.img
@@ -167,7 +176,8 @@ export default function Locations() {
                 >
                   Get Directions
                 </motion.button>
-              </div>
+                </div>
+              </motion.div>
             </motion.div>
           ))}
         </div>

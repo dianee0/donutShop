@@ -174,7 +174,7 @@ export default function Hero({ announcements = [] }: HeroProps) {
 
           {/* Right image */}
           <motion.div
-            className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl"
+            className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden will-change-transform "
             initial={{ opacity: 0, y: 30, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{

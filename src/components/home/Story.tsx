@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, animate } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, animate, useInView } from "framer-motion";
+import Image from "next/image";
 import { useRef, useEffect } from "react";
 import { asset } from "@/lib/assets";
 
@@ -38,33 +38,43 @@ export default function Story() {
           {/* Left side - Image/Visual */}
           <motion.div
             className="relative order-2 lg:order-1"
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, x: -24 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
+            transition={{ duration: 0.6 }}
           >
             <div className="relative bg-[#FFF9F0] rounded-3xl p-8 lg:p-12 shadow-lg">
               <div className="space-y-6">
                 <div className="flex gap-3 items-stretch h-[280px] sm:h-[320px] lg:h-[360px]">
                   {/* Left tall image */}
-                  <div className="w-2/5 flex-shrink-0">
-                    <img
+                  <div className="w-2/5 flex-shrink-0 relative">
+                    <Image
                       src={asset("/hero/cake-donuts.jpg")}
                       alt="Freshly baked donuts"
-                      className="w-full h-full object-cover rounded-2xl"
+                      fill
+                      className="object-cover rounded-2xl"
+                      sizes="(max-width: 1024px) 40vw, 360px"
                     />
                   </div>
                   {/* Right stacked images */}
-                  <div className="flex-1 flex flex-col gap-3">
-                    <img
-                      src={asset("/hero/donut-rack.jpg")}
-                      alt="Donuts on cooling rack"
-                      className="w-full h-1/2 object-cover rounded-2xl"
-                    />
-                    <img
-                      src={asset("/hero/cutting-donuts.jpg")}
-                      alt="Cutting fresh donuts"
-                      className="w-full h-1/2 object-cover rounded-2xl"
-                    />
+                  <div className="flex-1 flex flex-col gap-3 min-h-0">
+                    <div className="relative flex-1 min-h-0">
+                      <Image
+                        src={asset("/hero/donut-rack.jpg")}
+                        alt="Donuts on cooling rack"
+                        fill
+                        className="object-cover rounded-2xl"
+                        sizes="(max-width: 1024px) 55vw, 400px"
+                      />
+                    </div>
+                    <div className="relative flex-1 min-h-0">
+                      <Image
+                        src={asset("/hero/cutting-donuts.jpg")}
+                        alt="Cutting fresh donuts"
+                        fill
+                        className="object-cover rounded-2xl"
+                        sizes="(max-width: 1024px) 55vw, 400px"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -147,7 +157,7 @@ export default function Story() {
                       : { opacity: 0, scale: 0.5 }
                   }
                   transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.05 }}
                 >
                   <div className="text-3xl font-bold text-[#C84B6B]">
                     <Counter value={stat.value} suffix={stat.suffix} />
