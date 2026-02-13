@@ -74,7 +74,7 @@ export default function MenuCategory({ category, index }: MenuCategoryProps) {
               transition: { duration: 0.2 },
             }}
           >
-            {/* Item Image */}
+            {/* Item Image - plain img so R2 URLs load directly (no /_next/image on Cloudflare Pages) */}
             <div className="relative h-48 bg-gray-50 flex items-center justify-center overflow-hidden">
               {item.imageUrl ? (
                 <motion.div
@@ -82,12 +82,13 @@ export default function MenuCategory({ category, index }: MenuCategoryProps) {
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={item.imageUrl}
                     alt={item.name}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                    className="object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover"
                   />
                 </motion.div>
               ) : (

@@ -37,18 +37,14 @@ npm run pages:preview:init       # Initialize local D1 & start server → localh
 | `npm run pages:preview`      | Preview build (localhost:8788) - **use daily**   |
 | `npm run pages:preview:init` | Initialize local D1 + preview (first time only)  |
 | `npm run pages:deploy`       | Deploy to production                             |
-| `npm run db:schema:dev`      | Apply schema to remote dev DB                    |
-| `npm run db:seed:dev`        | Seed remote dev DB                               |
-| `npm run db:schema:prod`     | Apply schema to prod DB                          |
-| `npm run db:seed:prod`       | Seed prod DB                                     |
-| `npm run db:sync`            | Sync both DBs                                    |
+| `npm run db:schema`          | Apply schema to remote D1 (used by live site)     |
+| `npm run db:seed`            | Seed remote D1 (menu, announcements, etc.)       |
 
 > **Note:** `npm run dev` does not work with edge runtime + D1. Use the Wrangler workflow instead.
 
 ### Warnings
 
-- **`db:sync`** - Updates both dev AND prod. Risky once real data exists.
-- **`db:seed:prod`** - Overwrites production data.
+- **`db:seed`** - Overwrites remote DB data (menu items, announcements). Run before deploy when you change seed data.
 - **`pages:preview:init`** - Wipes local D1 data. First-time setup only.
 
 ---
@@ -73,14 +69,15 @@ This runs the Cloudflare Pages environment locally with D1 database access.
 # 2. Regenerate Prisma client
 npx prisma generate
 
-# 3. Apply to databases
-npm run db:schema:dev    # Remote dev DB
-npm run pages:preview:init  # Local DB (if testing locally)
+# 3. Apply to remote D1 and/or local
+npm run db:schema        # Remote D1 (used by live site)
+npm run pages:preview:init  # Local D1 only (if testing locally)
 ```
 
 ### Deploy
 
 ```bash
+npm run db:seed          # Update menu/announcements if you changed prisma/d1-seed.sql
 npm run pages:build
 npm run pages:preview    # Optional: verify locally
 npm run pages:deploy
@@ -157,7 +154,7 @@ Or view in Cloudflare Dashboard: **Workers & Pages** → **D1 SQL Database** →
 
 ## Database
 
-Two D1 databases: `donutshop-dev` (staging) and `donutshop-prod` (production).
+One D1 database: `donutshop-dev`. It is used by the live site (Pages binding) and by local preview (wrangler.toml).
 
 Schema and seed managed via SQL files:
 

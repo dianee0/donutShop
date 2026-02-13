@@ -13,11 +13,8 @@
     "pages:preview": "npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat",
     "pages:preview:init": "npx wrangler d1 execute donutshop-dev --file=prisma/d1-schema.sql --local && npx wrangler d1 execute donutshop-dev --file=prisma/d1-seed.sql --local",
     "pages:deploy": "npx wrangler pages deploy .vercel/output/static",
-    "db:schema:dev": "npx wrangler d1 execute donutshop-dev --file=prisma/d1-schema.sql --remote",
-    "db:seed:dev": "npx wrangler d1 execute donutshop-dev --file=prisma/d1-seed.sql --remote",
-    "db:schema:prod": "npx wrangler d1 execute donutshop-prod --file=prisma/d1-schema.sql --remote",
-    "db:seed:prod": "npx wrangler d1 execute donutshop-prod --file=prisma/d1-seed.sql --remote",
-    "db:sync": "npm run db:schema:dev && npm run db:seed:dev && npm run db:schema:prod && npm run db:seed:prod"
+    "db:schema": "npx wrangler d1 execute donutshop-dev --file=prisma/d1-schema.sql --remote",
+    "db:seed": "npx wrangler d1 execute donutshop-dev --file=prisma/d1-seed.sql --remote"
   },
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.13.16",
