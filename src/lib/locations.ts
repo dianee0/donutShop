@@ -23,7 +23,7 @@ export const locations: Location[] = [
     addressLine: "8414 Lander Ave, Hilmar, CA 95324",
     phone: "(209) 667-4718",
     hours: "4am - 12pm Mon-Sun",
-    imagePath: "locations/hilmar-shop.jpg",
+    imagePath: "locations/hilmar-shop.webp",
   },
   {
     name: "Jim's Donuts & Bagels",
@@ -32,7 +32,7 @@ export const locations: Location[] = [
     addressLine: "1915 N St, Newman, CA 95360",
     phone: "(209) 862-2044",
     hours: "Mon-Fri: 4:30am - 12pm\nSat: 5am - 12pm\nSun: 6am - 12pm",
-    imagePath: "locations/newman-shop.jpg",
+    imagePath: "locations/newman-shop.webp",
   },
   {
     name: "Jim's Donuts & Bagels",
@@ -41,6 +41,6 @@ export const locations: Location[] = [
     addressLine: "Schendel Ave. Ste 16385, Delhi, CA 95315",
     phone: "(209) 634-0016",
     hours: "6am - 12pm Mon-Sun",
-    imagePath: "locations/delhi-shop.jpg",
+    imagePath: "locations/delhi-shop.webp",
   },
 ];
