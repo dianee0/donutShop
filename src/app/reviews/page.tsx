@@ -9,8 +9,7 @@ export default function ReviewsPage() {
     {
       name: "Fail's Donuts & Bagels",
       address: "8414 Lander Ave, Hilmar, CA 95324",
-      reviewUrl:
-        "https://www.google.com/search?q=fails+donut+and+bagel+hilmar&oq=&gs_lcrp=EgZjaHJvbWUqBggCEEUYOzIGCAAQRRg5MgYIARBFGEAyBggCEEUYOzIVCAMQLhgUGK8BGMcBGIcCGIAEGI4FMhAIBBAuGK8BGMcBGIAEGI4FMgcIBRAAGIAEMgcIBhAAGIAEMggIBxAAGBYYHtIBCDIxNDJqMGo0qAIDsAIB8QVeiqeWxYnVePEFXoqnlsWJ1Xg&sourceid=chrome&ie=UTF-8", // Replace with actual URL
+      reviewUrl: "https://g.page/r/CdVpi6EeK37iEBM/review", // Replace with actual URL
     },
     {
       name: "Jim's Donuts & Bagels",
@@ -21,8 +20,7 @@ export default function ReviewsPage() {
     {
       name: "Jim's Donuts & Bagels",
       address: "Schendel Ave. Ste 16385, Delhi, CA 95315",
-      reviewUrl:
-        "https://www.google.com/search?q=jim%27s+donuts+and+bagels+delhi&sca_esv=ce0ce1db3a943257&sxsrf=AE3TifP4bedEtpNoe9gOwtU6BnbWVE0mag%3A1763612988583&ei=PJkeaeexI9CJptQPveKVsAE&ved=0ahUKEwjnv9Kt8v-QAxXQhIkEHT1xBRYQ4dUDCBE&uact=5&oq=jim%27s+donuts+and+bagels+delhi&gs_lp=Egxnd3Mtd2l6LXNlcnAiHWppbSdzIGRvbnV0cyBhbmQgYmFnZWxzIGRlbGhpMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yCxAAGIAEGIYDGIoFMgsQABiABBiGAxiKBTILEAAYgAQYhgMYigUyCxAAGIAEGIYDGIoFMgUQABjvBTIIEAAYogQYiQVI-Q5QjglYzA1wAXgAkAEAmAGQAaABqQWqAQMwLjW4AQPIAQD4AQGYAgagAsgFwgIIEAAYgAQYsAPCAgcQABiwAxgewgIOEAAYgAQYsAMYhgMYigXCAgsQABiwAxiiBBiJBcICAhAmwgIIEAAYgAQYogSYAwCIBgGQBgqSBwMxLjWgB5MzsgcDMC41uAfCBcIHBTAuMi40yAcX&sclient=gws-wiz-serp", // Replace with actual URL
+      reviewUrl: "https://g.page/r/CfAQZp4yiTz1EBM/review", // Replace with actual URL
     },
   ];
 
