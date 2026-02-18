@@ -144,7 +144,11 @@ export default function Story() {
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               {[
-                { value: 27, suffix: "+", label: "Years" },
+                {
+                  value: new Date().getFullYear() - 1998,
+                  suffix: "+",
+                  label: "Years",
+                },
                 { value: 30, suffix: "+", label: "Varieties" },
                 { value: 3, suffix: "", label: "Locations" },
               ].map((stat, index) => (
