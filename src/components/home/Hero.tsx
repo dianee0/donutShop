@@ -197,7 +197,7 @@ export default function Hero({ announcements = [] }: HeroProps) {
               className="relative w-full h-full"
             >
               <Image
-                src={asset("/hero/donuts-hero.png")}
+                src={asset("/hero/donuts-hero.avif")}
                 alt="Colorful fresh donuts with sprinkles"
                 fill
                 className="object-cover"
