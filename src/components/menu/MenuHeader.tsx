@@ -7,7 +7,7 @@ export default function MenuHeader() {
   return (
     <section
       className="py-16 lg:py-20 relative bg-cover bg-center"
-      style={{ backgroundImage: `url(${asset("/hero/DONUT-DOUGH.jpg")})` }}
+      style={{ backgroundImage: `url(${asset("/hero/donut-dough.avif")})` }}
     >
       {/* Overlay for text readability */}
       <div className="absolute inset-0 bg-[#FFF9F0]/80" />
