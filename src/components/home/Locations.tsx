@@ -55,13 +55,13 @@ export default function Locations() {
           {locationsData.map((location, index) => (
             <motion.div
               key={index}
-              className="rounded-2xl shadow-lg overflow-hidden"
+              className="rounded-2xl shadow-lg overflow-hidden h-full"
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
             >
               <motion.div
-                className="relative overflow-hidden rounded-2xl will-change-transform"
+                className="relative overflow-hidden rounded-2xl will-change-transform h-full"
                 whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
               >
                 {/* Image layer (GPU-composited) */}
