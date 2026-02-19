@@ -97,7 +97,7 @@ export default function Hero({ announcements = [] }: HeroProps) {
         </svg>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative z-10 flex items-center min-h-[calc(100vh-160px)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 relative z-10 flex items-center min-h-[calc(100vh-79px)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="space-y-6">
