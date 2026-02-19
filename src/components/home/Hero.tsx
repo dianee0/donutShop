@@ -59,7 +59,6 @@ export default function Hero({ announcements = [] }: HeroProps) {
   };
 
   const heroBgUrl = asset("hero/donut-frying.avif");
-  // const heroBgUrl = undefined;
 
   return (
     <section
