@@ -50,5 +50,5 @@ INSERT OR REPLACE INTO MenuItem (id, name, description, price, smallPrice, large
 
 -- Seed Announcements
 INSERT OR REPLACE INTO Announcement (id, title, message, type, isActive, expiresAt, createdAt, updatedAt) VALUES 
-('website-launch', 'Website Last Updated', 'February 12, 2026', 'info', 1, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('website-launch', 'Website Last Updated', 'February 18, 2026', 'info', 1, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('holiday-hours', 'Holiday Hours', 'We will be closed on November 27 and 28 for Thanksgiving. Happy Thanksgiving!', 'warning', 1, '2025-11-29T00:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

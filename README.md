@@ -39,13 +39,15 @@ npm run pages:preview:init       # Initialize local D1 & start server → localh
 | `npm run pages:deploy`       | Deploy to production                             |
 | `npm run db:schema`          | Apply schema to remote D1 (used by live site)     |
 | `npm run db:seed`            | Seed remote D1 (menu, announcements, etc.)       |
+| `npm run db:seed:local`      | Re-seed local D1 (use after changing seed data)  |
 
 > **Note:** `npm run dev` does not work with edge runtime + D1. Use the Wrangler workflow instead.
 
 ### Warnings
 
-- **`db:seed`** - Overwrites remote DB data (menu items, announcements). Run before deploy when you change seed data.
-- **`pages:preview:init`** - Wipes local D1 data. First-time setup only.
+- **`db:seed`** - Overwrites remote DB data (menu items, announcements, footer “Last updated”). Run before or after deploy when you change `prisma/d1-seed.sql`.
+- **`db:seed:local`** - Overwrites local D1 seed data only. Run when you change `prisma/d1-seed.sql` and want localhost to show the new data (e.g. updated “Last updated” date).
+- **`pages:preview:init`** - Wipes and re-initializes local D1 (schema + seed). First-time setup only, or when you want a clean local DB.
 
 ---
 
@@ -72,6 +74,15 @@ npx prisma generate
 # 3. Apply to remote D1 and/or local
 npm run db:schema        # Remote D1 (used by live site)
 npm run pages:preview:init  # Local D1 only (if testing locally)
+```
+
+### Seed Data Changes (menu, announcements, “Last updated”)
+
+When you edit `prisma/d1-seed.sql`:
+
+```bash
+npm run db:seed:local     # Update local D1 so localhost shows new data
+npm run db:seed           # Update remote D1 so production shows new data (run before/after deploy)
 ```
 
 ### Deploy
@@ -165,10 +176,12 @@ Schema and seed managed via SQL files:
 
 ## Troubleshooting
 
-| Issue              | Fix                              |
-| ------------------ | -------------------------------- |
-| Port 8788 in use   | `lsof -ti:8788 \| xargs kill -9` |
-| Auth expired       | `npx wrangler login`             |
-| Local D1 empty     | `npm run pages:preview:init`     |
-| Prisma types stale | `npx prisma generate`            |
-| TS errors persist  | Restart TS Server in IDE         |
+| Issue                        | Fix                              |
+| ---------------------------- | -------------------------------- |
+| Port 8788 in use             | `lsof -ti:8788 \| xargs kill -9` |
+| Auth expired                 | `npx wrangler login`             |
+| Local D1 empty               | `npm run pages:preview:init`     |
+| Wrong “Last updated” locally | `npm run db:seed:local`          |
+| Wrong/missing data on live   | `npm run db:seed` (remote)       |
+| Prisma types stale           | `npx prisma generate`            |
+| TS errors persist            | Restart TS Server in IDE         |
