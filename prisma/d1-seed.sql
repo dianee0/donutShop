@@ -43,12 +43,12 @@ INSERT OR REPLACE INTO MenuItem (id, name, description, price, imageUrl, flavors
 
 -- Seed Menu Items (Drinks)
 INSERT OR REPLACE INTO MenuItem (id, name, description, price, smallPrice, largePrice, imageUrl, flavors, isActive, categoryId) VALUES 
-('regular-coffee', 'Regular Coffee', 'Hot freshly brewed coffee, with self-serve cream and sugar.', 245, 245, 295, NULL, NULL, 1, 'drinks'),
-('hot-cappuccino', 'Hot Cappuccino', 'A warm cup of cappuccino, sourced from farmer brothers coffee.', 345, 345, 425, NULL, 'Mocha, Vanilla', 1, 'drinks'),
-('hot-chocolate', 'Hot Chocolate', 'A warm cup of hot chocolate, sourced from farmer brothers coffee.', 345, 345, 425, NULL, NULL, 1, 'drinks'),
+('regular-coffee', 'Regular Coffee', 'Hot freshly brewed coffee, with self-serve cream and sugar.', 250, 250, 300, NULL, NULL, 1, 'drinks'),
+('hot-cappuccino', 'Hot Cappuccino', 'A warm cup of cappuccino, sourced from farmer brothers coffee.', 350, 350, 430, NULL, 'Mocha, Vanilla', 1, 'drinks'),
+('hot-chocolate', 'Hot Chocolate', 'A warm cup of hot chocolate, sourced from farmer brothers coffee.', 350, 350, 430, NULL, NULL, 1, 'drinks'),
 ('iced-drinks', 'Iced Drinks', 'A cold cup of iced vietnemese coffee, iced green tea matcha, or thai iced tea.', 395, NULL, NULL, NULL, NULL, 1, 'drinks');
 
 -- Seed Announcements
 INSERT OR REPLACE INTO Announcement (id, title, message, type, isActive, expiresAt, createdAt, updatedAt) VALUES 
-('website-launch', 'Website Last Updated', 'February 18, 2026', 'info', 1, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('website-launch', 'Website Last Updated', 'March 12, 2026', 'info', 1, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 ('holiday-hours', 'Holiday Hours', 'We will be closed on November 27 and 28 for Thanksgiving. Happy Thanksgiving!', 'warning', 1, '2025-11-29T00:00:00', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
